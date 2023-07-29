@@ -1,13 +1,12 @@
-import { useNavigate, useOutlet } from 'react-router-dom';
+import { Navigate, useOutlet } from 'react-router-dom';
 import { useAuth } from 'lib/useAuth';
 
 const AppLayout = () => {
   const outlet = useOutlet();
-  const navigate = useNavigate();
   const { user } = useAuth();
 
   if (!user) {
-    return navigate('/login', { replace: true });
+    return <Navigate to="/login" replace={true} />;
   }
 
   return outlet;
