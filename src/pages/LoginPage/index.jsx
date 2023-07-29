@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { ArrowRightIcon, ReloadIcon } from '@radix-ui/react-icons'
+import { EnterIcon, ReloadIcon } from '@radix-ui/react-icons'
 
 import { Button } from 'components/ui/button'
 import {
@@ -84,12 +84,13 @@ const LoginPage = () => {
             type='submit'
             disabled={btnLoader}
           >
-            Login
             {btnLoader ? (
-              <ReloadIcon className='ml-2 h-4 w-4 animate-spin' />
+              <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
             ) : (
-              <ArrowRightIcon className='ml-2 h-4 w-4' />
+              <EnterIcon className='mr-2 h-4 w-4' />
             )}
+
+            Login
           </Button>
         </CardFooter>
       </Card>
