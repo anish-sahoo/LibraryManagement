@@ -11,6 +11,9 @@ import LoginPage from 'pages/LoginPage';
 import DashboardPage from 'pages/DashboardPage';
 import BooksPage from 'pages/BooksPage';
 import SettingsPage from 'pages/SettingsPage';
+import StudentsPage from 'pages/StudentsPage';
+import ReportsPage from 'pages/ReportsPage';
+import UsersPage from 'pages/UsersPage';
 
 import AuthLayout from 'components/layouts/AuthLayout';
 import HomeLayout from 'components/layouts/HomeLayout';
@@ -40,6 +43,9 @@ export const router = createBrowserRouter(
         <Route path='/dashboard' element={<DashboardPage />} />
         <Route path='/books' element={<BooksPage />} />
         <Route path='/settings' element={<SettingsPage />} />
+        <Route path='/students' element={<StudentsPage />} />
+        <Route path='/reports' element={<ReportsPage />} />
+        <Route path='/users' element={<UsersPage />} />
       </Route>
     </Route>
   )

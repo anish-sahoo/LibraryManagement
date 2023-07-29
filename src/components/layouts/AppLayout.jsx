@@ -15,7 +15,7 @@ const AppLayout = () => {
     <div className='flex'>
       <Sidebar />
 
-      <div style={{ width: 'calc(100vw - 250px)'}}>
+      <div style={{ width: 'calc(100vw - 230px)'}}>
         {outlet}
       </div>
     </div>

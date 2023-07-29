@@ -31,54 +31,52 @@ const LoginPage = () => {
     setBtnLoader(true);
     setTimeout(() => {
       login(formik.values);
-    }, 3000);
+    }, 1500);
   }
 
   return (
     <div className='flex justify-center items-center h-full'>
       <Card className='w-[350px]'>
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Authenticate yourself to continue.</CardDescription>
+          <CardTitle className='text-xl font-bold'>Login</CardTitle>
+          <CardDescription className='!m-0'>Authenticate yourself to continue.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className='grid w-full items-center gap-4'>
-              <div className='flex flex-col space-y-1.5'>
-                <Label htmlFor='email'>Email</Label>
-                <Input
-                  id='email'
-                  placeholder='Enter your email address'
-                  name='email'
-                  type='email'
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                  error={
-                    Boolean(formik.touched.email && formik.errors.email) &&
-                    formik.errors.email
-                  }
-                />
-              </div>
-
-              <div className='flex flex-col space-y-1.5'>
-                <Label htmlFor='password'>Password</Label>
-                <Input
-                  id='password'
-                  placeholder='Enter your password'
-                  name='password'
-                  type='password'
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  error={
-                    Boolean(formik.touched.password && formik.errors.password) &&
-                    formik.errors.password
-                  }
-                />
-              </div>
+          <div className='grid w-full items-center gap-4'>
+            <div className='flex flex-col space-y-1.5'>
+              <Label htmlFor='email'>Email</Label>
+              <Input
+                id='email'
+                placeholder='Enter your email address'
+                name='email'
+                type='email'
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                error={
+                  Boolean(formik.touched.email && formik.errors.email) &&
+                  formik.errors.email
+                }
+              />
             </div>
-          </form>
+
+            <div className='flex flex-col space-y-1.5'>
+              <Label htmlFor='password'>Password</Label>
+              <Input
+                id='password'
+                placeholder='Enter your password'
+                name='password'
+                type='password'
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                error={
+                  Boolean(formik.touched.password && formik.errors.password) &&
+                  formik.errors.password
+                }
+              />
+            </div>
+          </div>
         </CardContent>
-        <CardFooter className='flex justify-end mt-4'>
+        <CardFooter className='flex justify-end'>
           <Button
             onClick={formik.handleSubmit}
             type='submit'
