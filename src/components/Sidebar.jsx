@@ -13,6 +13,9 @@ import {
 import { ScrollArea } from 'components/ui/scroll-area';
 import { Button } from 'components/ui/button';
 import { useAuth } from 'lib/useAuth';
+import { toast } from 'components/ui/use-toast';
+import { Toaster } from 'components/ui/toaster';
+
 
 const Sidebar = () => {
   const { logout } = useAuth();
@@ -52,6 +55,7 @@ const Sidebar = () => {
 
   return (
     <div className='h-screen w-[230px] bg-white border-r py-6'>
+      <Toaster/>
       <div className='flex justify-center px-4 mb-8'>
         <img src={Logo} alt='Logo' height={100} width={100} />
       </div>
@@ -79,7 +83,12 @@ const Sidebar = () => {
       <div className='flex justify-between items-center px-4 py-2 border-t'>
         <span className='font-semibold'>Oliver Smith</span>
 
-        <Button size='icon' onClick={() => logout()}>
+        <Button size='icon' onClick={() => {
+            logout();
+            toast({
+              title: 'Logged out successfully!'
+            })
+          }}>
           <Expand />
         </Button>
       </div>
