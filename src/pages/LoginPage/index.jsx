@@ -16,6 +16,7 @@ import { Label } from 'components/ui/label'
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { useAuth } from 'lib/useAuth';
 import { useToast } from 'components/ui/use-toast';
+import { sleep } from 'lib/utils';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -31,15 +32,48 @@ const LoginPage = () => {
     },
   });
 
-  const handleLogin = () => {
-    setBtnLoader(true);
-    setTimeout(() => {
-      login(formik.values);
+  const handleLogin = async () => {
+    try {
+      setBtnLoader(true);
+      await sleep(1500);
+
+      fetch('./database/users.json')
+        .then(response => {
+          return response.json();
+        }).then(data => {
+          const user = data.find(el => el.email === formik.values.email);
+
+          if (user?.password == formik.values.password) {
+            login(user);
+            toast({
+              title: "Login successful!",
+              description: "You have successfully logged in.",
+            });
+          } else if (user) {
+            toast({
+              variant: "destructive",
+              title: "Invalid password!",
+              description: "You have entered invalid password.",
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Invaid email!",
+              description: "You have entered invalid email.",
+            });
+          }
+        }).catch((e) => {
+          console.log(e.message);
+        });
+    } catch (e) {
       toast({
-        title: "Login successful!",
-        description: "You have successfully logged in.",
+        variant: "destructive",
+        title: "Something went wrong!",
+        description: "Please try again after some time.",
       });
-    }, 1500);
+    } finally {
+      setBtnLoader(false);
+    }
   }
 
   return (

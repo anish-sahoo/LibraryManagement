@@ -17,7 +17,7 @@ import { toast } from 'components/ui/use-toast';
 
 
 const Sidebar = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const navLinks = [
     {
@@ -79,15 +79,19 @@ const Sidebar = () => {
       </ScrollArea>
 
       <div className='flex justify-between items-center px-4 py-2 border-t'>
-        <span className='font-semibold'>Oliver Smith</span>
+        <span className='font-semibold line-clamp-1'>{`${user.firstName} ${user.lastName}`}</span>
 
-        <Button size='icon' onClick={() => {
+        <Button
+          className='shrink-0'
+          size='icon'
+          onClick={() => {
             logout();
             toast({
               title: 'Logout successfully!',
               description: 'You have successfully logged out.',
             })
-          }}>
+          }}
+        >
           <Expand />
         </Button>
       </div>
