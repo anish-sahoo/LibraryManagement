@@ -15,7 +15,6 @@ import { Input } from 'components/ui/input'
 import { Label } from 'components/ui/label'
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { useAuth } from 'lib/useAuth';
-import { Toaster } from "components/ui/toaster"
 import { useToast } from 'components/ui/use-toast';
 
 const LoginPage = () => {
@@ -36,16 +35,15 @@ const LoginPage = () => {
     setBtnLoader(true);
     setTimeout(() => {
       login(formik.values);
+      toast({
+        title: "Login successful!",
+        description: "You have successfully logged in.",
+      });
     }, 1500);
-    toast({
-      title: "Login Successful",
-      description: "You have successfully logged in!",
-    });
   }
 
   return (
     <div className='flex justify-center items-center h-full'>
-      <Toaster/>
       <Card className='w-[350px]'>
         <CardHeader>
           <CardTitle className='text-xl font-bold'>Login</CardTitle>
