@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { useLoaderData, useOutlet, Await } from 'react-router-dom';
+import { Toaster } from 'components/ui/toaster';
 
 import Loader from  'components/Loader';
 import { AuthProvider } from 'lib/useAuth';
@@ -13,7 +14,10 @@ const AuthLayout = () => {
       <Await
         resolve={userPromise}
         children={(user) => (
-          <AuthProvider userData={user}>{outlet}</AuthProvider>
+          <AuthProvider userData={user}>
+            <Toaster />
+            {outlet}
+          </AuthProvider>
         )}
       />
     </Suspense>
