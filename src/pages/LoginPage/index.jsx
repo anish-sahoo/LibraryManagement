@@ -43,7 +43,7 @@ const LoginPage = () => {
         }).then(data => {
           const user = data.find(el => el.email === formik.values.email);
 
-          if (user?.password == formik.values.password) {
+          if (user?.password === formik.values.password) {
             login(user);
             toast({
               title: "Login successful!",
