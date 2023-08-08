@@ -2,8 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from 'components/ui/use-toast';
 import { sleep } from 'lib/utils';
 import Loader from  'components/Loader';
-import { Button } from 'components/ui/button'
-import { PlusIcon } from '@radix-ui/react-icons'
+import { Button } from 'components/ui/button';
+import { PlusIcon } from '@radix-ui/react-icons';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "components/ui/table";
+import { TableRows } from 'components/TableRows';
+
 
 const UsersPage = () => {
   const { toast } = useToast();
@@ -56,6 +67,24 @@ const UsersPage = () => {
         <Button>
           <PlusIcon className='mr-2' /> Add new
         </Button>
+      </div>
+
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Method</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          
+          <TableBody>
+            <TableRows/>
+          </TableBody>
+        
+        </Table>
       </div>
 
       <hr />
