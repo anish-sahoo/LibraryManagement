@@ -73,10 +73,12 @@ const UsersPage = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="w-[100px]">No.</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Books Due</TableHead>
+              <TableHead>User Type</TableHead>
+              <TableHead className="text-right">Total Books Loaned</TableHead>
             </TableRow>
           </TableHeader>
           

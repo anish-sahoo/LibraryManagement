@@ -7,17 +7,26 @@ import {
     TableHeader,
     TableRow,
 } from "components/ui/table";
-import { useLocalStorage } from "lib/useLocalStorage";
+import { useEffect, useState } from "react";
 
 export const TableRows = () => {
+  const [users, setUsers] = useState([]); 
   let i = 1;
-  let array = useLocalStorage('user');
 
-  console.log(array);
-  return array.map(item => <TableRow>
+  useEffect(() => {
+    fetch('./database/users.json')
+      .then(response => response.json())
+      .then(data => setUsers(data))
+      .catch(error => console.log(error));
+  }, []);
+
+  return users.map(item => <TableRow key={i}>
         <TableCell>{i++}</TableCell>
-        <TableCell></TableCell>
-        <TableCell></TableCell>
-        <TableCell></TableCell>
+        <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
+        <TableCell>{item.email}</TableCell>
+        <TableCell>{0}</TableCell>
+        <TableCell>{"Student"}</TableCell>
+        <TableCell className="text-right">0</TableCell>
       </TableRow>);
 }
+
