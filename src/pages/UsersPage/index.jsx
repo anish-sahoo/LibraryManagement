@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "components/ui/table";
-import { TableRows } from 'components/TableRows';
+import { TableRows } from './TableRows';
 
 
 const UsersPage = () => {

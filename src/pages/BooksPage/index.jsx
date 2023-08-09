@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useToast } from 'components/ui/use-toast';
-import { sleep } from 'lib/utils';
-import Loader from  'components/Loader';
+// import { useToast } from 'components/ui/use-toast';
+// import { sleep } from 'lib/utils';
+// import Loader from  'components/Loader';
 import { Button } from 'components/ui/button'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { ScrollArea } from "components/ui/scroll-area"
 import { Input } from 'components/ui/input'
-import BookCard from './BookCard';
+// import BookCard from './BookCard';
+import { BookCardList } from './BookCardList';
 
 const BooksPage = () => {
   return (
@@ -36,7 +37,7 @@ const BooksPage = () => {
           </div>
 
           <ScrollArea className='px-4' style={{ height: "calc(100vh - 185px)" }}>
-            <BookCard />
+            <BookCardList />
           </ScrollArea>
         </div>
       </div>
