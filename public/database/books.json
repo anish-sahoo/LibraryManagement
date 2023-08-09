@@ -5,14 +5,25 @@
         "author": "J. R. R. Tolkien",
         "totalCopies": 3,
         "thumbnailUrl": "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&set=key%5Bresolve.format%5D,value%5Bwebp%5D&product=path%5B/pimages/9780547928210_p0_v3%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
-        "availableCopies": 2
+        "availableCopies": 2,
+        "description": "The first volume of the Lord of the Rings saga"
     },
     {
         "id": "bd3b4722-7503-47db-b1fb-8324122d637b",
         "name": "The Lord of the Rings Volume 2",
         "author": "J. R. R. Tolkien",
-        "thumbnailUrl": "https://m.media-amazon.com/images/I/61mzwH2uZ7L._AC_UF1000,1000_QL80_.jpg",
+        "thumbnailUrl": "https://m.media-amazon.com/images/I/41HkOD2+e1L.jpg",
         "totalCopies": 3,
-        "availableCopies": 1
+        "availableCopies": 1,
+        "description": "The second volume of the Lord of the Rings saga"
+    },
+    {
+        "id": "bd3b4722-7503-47db-b1fb-8324122d637b",
+        "name": "The Lord of the Rings Volume 3",
+        "author": "J. R. R. Tolkien",
+        "thumbnailUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1654216226i/61215384.jpg",
+        "totalCopies": 3,
+        "availableCopies": 3,
+        "description": "The third volume of the Lord of the Rings saga"
     }
 ]
