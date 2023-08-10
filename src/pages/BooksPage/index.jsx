@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFormik } from 'formik';
 import { useToast } from 'components/ui/use-toast';
 import { sleep } from 'lib/utils';
 import Loader from  'components/Loader';
@@ -7,12 +8,24 @@ import { PlusIcon } from '@radix-ui/react-icons'
 import { ScrollArea } from "components/ui/scroll-area"
 import { Input } from 'components/ui/input'
 import BookCard from "./BookCard";
+import NewBook from "./NewBook";
+import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 
 const BooksPage = () => {
   const { toast } = useToast();
   const [books, setBooks] = useState([]);
   const [loader, setLoader] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [newBookOpen, setNewBookOpen] = useState(false);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: INITIAL_VALUE,
+    validationSchema: VALIDATION_SCHEMA,
+    onSubmit: () => {
+      handleBookCreate();
+    },
+  });
 
   useEffect(() => {
     fetchBooksList();
@@ -40,6 +53,10 @@ const BooksPage = () => {
     }
   }
 
+  const handleBookCreate = async () => {
+
+  }
+
   if (loader) {
     return (
       <div className="h-full">
@@ -56,7 +73,7 @@ const BooksPage = () => {
           <p className="text-muted-foreground">Total records: {totalRecords}</p>
         </div>
 
-        <Button>
+        <Button onClick={() => setNewBookOpen(true)}>
           <PlusIcon className='mr-2' /> Add new
         </Button>
       </div>
@@ -74,13 +91,19 @@ const BooksPage = () => {
             />
           </div>
 
-          <ScrollArea className='px-4' style={{ height: "calc(100vh - 185px)" }}>
+          <ScrollArea className='px-4' style={{ height: "calc(100vh - 170px)" }}>
             <div className="grid grid-cols-2 gap-4">
               {books.map(book => <BookCard book={book} key={book.id} />)}
             </div>
           </ScrollArea>
         </div>
       </div>
+
+      <NewBook
+        formik={formik}
+        newBookOpen={newBookOpen}
+        setNewBookOpen={setNewBookOpen}
+      />
     </div>
   )
 }
