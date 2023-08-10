@@ -7,19 +7,18 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "components/ui/table";
-import { TableRows } from './TableRows';
 
 
 const UsersPage = () => {
   const { toast } = useToast();
   const [loader, setLoader] = useState(true);
   const [users, setUsers] = useState([]);
+  const [totalRecords, setTotalRecords] = useState(0);
 
   useEffect(() => {
     fetchUsers();
@@ -34,6 +33,7 @@ const UsersPage = () => {
           return response.json();
         }).then(data => {
           setUsers(data);
+          setTotalRecords(data.length);
         }).catch((e) => {
           console.log(e.message);
         });
@@ -57,11 +57,11 @@ const UsersPage = () => {
   }
 
   return (
-    <div className="bg-white p-6 h-full">
-      <div className="flex justify-between items-center mb-16">
+    <div className='bg-white min-h-full'>
+      <div className="px-6 py-4 bg-white flex justify-between items-center border-b">
         <div>
           <h2 className="text-xl font-bold tracking-tight">Users</h2>
-          <p className="text-muted-foreground">Total records: 500</p>
+          <p className="text-muted-foreground">Total records: {totalRecords}</p>
         </div>
 
         <Button>
@@ -69,27 +69,35 @@ const UsersPage = () => {
         </Button>
       </div>
 
-      <div>
+      <div className="px-6 mt-6">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">No.</TableHead>
-              <TableHead>Name</TableHead>
+              <TableHead>First Name</TableHead>
+              <TableHead>Last Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Books Due</TableHead>
               <TableHead>User Type</TableHead>
-              <TableHead className="text-right">Total Books Loaned</TableHead>
+              <TableHead>Books Issued</TableHead>
             </TableRow>
           </TableHeader>
-          
+
           <TableBody>
-            <TableRows/>
+            {users.map(user => {
+              return (
+                <TableRow key={user.id}>
+                  <TableCell>{user.firstName}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>0</TableCell>
+                  <TableCell>Student</TableCell>
+                  <TableCell>0</TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
-        
         </Table>
       </div>
-
-      <hr />
     </div>
   )
 }

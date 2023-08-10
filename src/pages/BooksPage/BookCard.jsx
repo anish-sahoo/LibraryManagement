@@ -1,26 +1,23 @@
 import React from 'react';
-import {
-  Card,
-  CardDescription,
-  CardTitle,
-} from 'components/ui/card'
+import { Card } from 'components/ui/card'
 import { Badge } from "components/ui/badge"
 
-const BookCard = (book, index) => {
+const BookCard = ({ book }) => {
   return (
-    <Card className='w-full mb-2 p-4 rounded-md' key={index}>
+    <Card className='w-full p-4 rounded-md'>
       <div className='flex'>
-        <div className='w-36 h-52 rounded-md shrink-0'> 
-          <img src={book.thumbnailUrl} alt={book.name}></img>
+        <div className='w-36 h-52 rounded-md shrink-0'>
+          <img src={book.thumbnailUrl} alt={book.name} className='object-contain h-full w-full'></img>
         </div>
         <div className='ml-4 w-full'>
           <div className='flex justify-between items-start'>
-            <div className='mr-3'>
-              <CardTitle className='text-xl font-bold'>{book.name}</CardTitle>
-              <CardDescription className='!m-0'>By {book.author}</CardDescription>
-            </div>
-            <Badge className={`shrink=0 ${book.availableCopies <= 1 ? "bg-destructive":""}`}>{book.availableCopies} Available</Badge>
+            <h1 className='text-xl font-bold line-clamp-1'>{book.name}</h1>
+            <Badge className={`shrink-0 ml-2 ${book.availableCopies <= 1 ? "bg-destructive" : ""}`}>{book.availableCopies} Available</Badge>
           </div>
+
+          <p className='mb-4'>By <span className='italic text-blue-600 font-semibold'>{book.author}</span></p>
+
+          <p className='line-clamp-3'>{book.description}</p>
         </div>
       </div>
     </Card>
