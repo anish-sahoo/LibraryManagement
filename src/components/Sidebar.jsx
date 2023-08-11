@@ -15,7 +15,6 @@ import { Button } from 'components/ui/button';
 import { useAuth } from 'lib/useAuth';
 import { toast } from 'components/ui/use-toast';
 
-
 const Sidebar = () => {
   const { logout, user } = useAuth();
 
@@ -79,7 +78,7 @@ const Sidebar = () => {
       </ScrollArea>
 
       <div className='flex justify-between items-center px-4 py-2 border-t'>
-        <span className='font-semibold line-clamp-1'>{`${user.firstName} ${user.lastName}`}</span>
+        <span className='font-semibold line-clamp-1'>{user.name}</span>
 
         <Button
           className='shrink-0'

@@ -19,14 +19,29 @@ import AuthLayout from 'components/layouts/AuthLayout';
 import HomeLayout from 'components/layouts/HomeLayout';
 import AppLayout from 'components/layouts/AppLayout';
 
+import { setAuthHeaders } from 'apis/axios';
+import { authUser } from 'apis/auth';
+
 // ideally this would be an API call to server to get logged in user data
 const getUserData = () =>
-  new Promise((resolve) =>
-    setTimeout(() => {
-      const user = window.localStorage.getItem('user');
-      resolve(user);
-    }, 3000)
-  );
+  new Promise(async (resolve) => {
+    await setAuthHeaders();
+
+    try {
+      const authToken = localStorage.getItem('authToken');
+
+      if (authToken) {
+        const response = await authUser();
+        resolve(response.data);
+      } else {
+        resolve(null);
+      }
+    } catch (error) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('authToken');
+      resolve(null);
+    }
+  });
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

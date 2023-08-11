@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { EnterIcon, ReloadIcon } from '@radix-ui/react-icons'
-
+import { setAuthHeaders } from "apis/axios";
+import { loginUser } from "apis/auth"
 import { Button } from 'components/ui/button'
 import {
   Card,
@@ -16,10 +17,9 @@ import { Label } from 'components/ui/label'
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { useAuth } from 'lib/useAuth';
 import { useToast } from 'components/ui/use-toast';
-import { sleep } from 'lib/utils';
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const [btnLoader, setBtnLoader] = useState(false);
   const { toast } = useToast();
 
@@ -35,37 +35,15 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       setBtnLoader(true);
-      await sleep(1500);
-
-      fetch('./database/users.json')
-        .then(response => {
-          return response.json();
-        }).then(data => {
-          const user = data.find(el => el.email === formik.values.email);
-
-          if (user?.password === formik.values.password) {
-            login(user);
-            toast({
-              title: "Login successful!",
-              description: "You have successfully logged in.",
-            });
-          } else if (user) {
-            toast({
-              variant: "destructive",
-              title: "Invalid password!",
-              description: "You have entered invalid password.",
-            });
-          } else {
-            toast({
-              variant: "destructive",
-              title: "Invaid email!",
-              description: "You have entered invalid email.",
-            });
-          }
-        }).catch((e) => {
-          console.log(e.message);
-        });
-    } catch (e) {
+      const response = await loginUser(formik.values);
+      localStorage.setItem('authToken', response.data.authToken);
+      await setAuthHeaders();
+      await login();
+      toast({
+        title: 'Login successfully!',
+        description: 'You have successfully logged in.',
+      })
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Something went wrong!",
