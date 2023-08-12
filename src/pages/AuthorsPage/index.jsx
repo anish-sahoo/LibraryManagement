@@ -18,6 +18,7 @@ import { getAuthors, createAuthor } from 'apis/authors';
 import NewAuthor from './NewAuthor';
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { Label } from '@radix-ui/react-label';
+import EmptyBox from 'components/EmptyBox';
 
 const AuthorsPage = () => {
   const relativeTime = require('dayjs/plugin/relativeTime');
@@ -98,29 +99,35 @@ const AuthorsPage = () => {
           <Label className='font-bold tracking-wide'>Total records: {totalRecords}</Label>
         </div>
 
-        <Table>
-          <TableHeader>
-            <TableHeaderRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Active</TableHead>
-              <TableHead>Created At</TableHead>
-            </TableHeaderRow>
-          </TableHeader>
+        {totalRecords > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableHeaderRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Active</TableHead>
+                <TableHead>Created At</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableHeaderRow>
+            </TableHeader>
 
-          <TableBody>
-            {authors.map(author => {
-              return (
-                <TableRow key={author.id}>
-                  <TableCell>{author.id}</TableCell>
-                  <TableCell>{author.name}</TableCell>
-                  <TableCell>{author.active ? <CheckCircledIcon /> : <CrossCircledIcon />}</TableCell>
-                  <TableCell>{dayjs(author.created_at).fromNow()}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+            <TableBody>
+              {authors.map(author => {
+                return (
+                  <TableRow key={author.id}>
+                    <TableCell>{author.id}</TableCell>
+                    <TableCell>{author.name}</TableCell>
+                    <TableCell>{author.active ? <CheckCircledIcon /> : <CrossCircledIcon />}</TableCell>
+                    <TableCell>{dayjs(author.created_at).fromNow()}</TableCell>
+                    <TableCell>Edit | Delete</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <EmptyBox />
+        )}
       </div>
 
       <NewAuthor
