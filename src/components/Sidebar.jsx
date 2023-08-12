@@ -35,6 +35,11 @@ const Sidebar = () => {
       path: '/students',
     },
     {
+      title: 'Authors',
+      logo: <Group />,
+      path: '/authors',
+    },
+    {
       title: 'Reports',
       logo: <Report />,
       path: '/reports',
@@ -64,7 +69,7 @@ const Sidebar = () => {
               <NavLink
                 to={nav.path}
                 className={({ isActive, isPending }) =>
-                  `block rounded-md transition-all duration-300 px-2 py-2 hover:bg-gray-100 ${isActive ? '!bg-gray-300' : ''}`
+                  `block rounded-sm transition-all duration-300 px-2 py-2 hover:bg-gray-100 ${isActive ? '!bg-gray-300' : ''}`
                 }
               >
                 <div className='flex items-center'>

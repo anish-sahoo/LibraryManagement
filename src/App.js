@@ -12,6 +12,7 @@ import DashboardPage from 'pages/DashboardPage';
 import BooksPage from 'pages/BooksPage';
 import SettingsPage from 'pages/SettingsPage';
 import StudentsPage from 'pages/StudentsPage';
+import AuthorsPage from 'pages/AuthorsPage';
 import ReportsPage from 'pages/ReportsPage';
 import UsersPage from 'pages/UsersPage';
 
@@ -59,6 +60,7 @@ export const router = createBrowserRouter(
         <Route path='/books' element={<BooksPage />} />
         <Route path='/settings' element={<SettingsPage />} />
         <Route path='/students' element={<StudentsPage />} />
+        <Route path='/authors' element={<AuthorsPage />} />
         <Route path='/reports' element={<ReportsPage />} />
         <Route path='/users' element={<UsersPage />} />
       </Route>
