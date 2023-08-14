@@ -21,7 +21,7 @@ export const createAuthor = (payload) => {
 };
 
 export const updateAuthor = (id, payload) => {
-  return axios.put(getAuthorsUrl(id), payload);
+  return axios.post(getAuthorsUrl(id), payload);
 };
 
 export const destroyAuthor = (id) => {

@@ -20,8 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from 'components/ui/table';
-import { getAuthors, createAuthor, destroyAuthor } from 'apis/authors';
+import { getAuthors, createAuthor, updateAuthor, destroyAuthor } from 'apis/authors';
 import NewAuthor from './NewAuthor';
+import EditAuthor from './EditAuthor';
 import DeleteAuthor from './DeleteAuthor';
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { Label } from '@radix-ui/react-label';
@@ -36,24 +37,29 @@ const AuthorsPage = () => {
   const [authors, setAuthors] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [newAuthorOpen, setNewAuthorOpen] = useState(false);
+  const [editAuthorOpen, setEditAuthorOpen] = useState(false);
   const [deleteAuthorOpen, setDeleteAuthorOpen] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState({});
   const [btnLoader, setBtnLoader] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: INITIAL_VALUE,
+    initialValues: selectedAuthor?.id ? selectedAuthor : INITIAL_VALUE,
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: () => {
-      handleAuthorCreate();
+      if (selectedAuthor?.id) {
+        handleAuthorEdit();
+      } else {
+        handleAuthorCreate();
+      }
     },
   });
 
   useEffect(() => {
-    fetchAuthors();
+    handleFetchAuthors();
   }, []);
 
-  const fetchAuthors = async () => {
+  const handleFetchAuthors = async () => {
     try {
       const response = await getAuthors();
       setAuthors(response.data);
@@ -70,14 +76,47 @@ const AuthorsPage = () => {
       setBtnLoader(true);
       await createAuthor(formik.values);
       toast({ title: 'Author has been successfully created.' });
-      await fetchAuthors();
-      formik.resetForm();
-      setNewAuthorOpen(false);
+      await handleFetchAuthors();
+      handleNewAuthorDialogClose();
     } catch (error) {
       toast({ variant: 'destructive', title: error.message });
     } finally {
       setBtnLoader(false);
     }
+  }
+
+  const handleAuthorEdit = async () => {
+    try {
+      setBtnLoader(true);
+      await updateAuthor(selectedAuthor?.id, formik.values);
+      toast({ title: 'Author has been successfully updated.' });
+      await handleFetchAuthors();
+      handleEditAuthorDialogClose();
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
+    } finally {
+      setBtnLoader(false);
+    }
+  }
+
+  const handleAuthorDelete = async () => {
+    try {
+      setBtnLoader(true);
+      await destroyAuthor(selectedAuthor?.id);
+      toast({ title: 'Author has been successfully deleted.' });
+      await handleFetchAuthors();
+      setSelectedAuthor({});
+      setDeleteAuthorOpen(false);
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
+    } finally {
+      setBtnLoader(false);
+    }
+  }
+
+  const handleEditBtnClick = (data) => {
+    setSelectedAuthor(data);
+    setEditAuthorOpen(true);
   }
 
   const handleDeleteBtnClick = (data) => {
@@ -90,19 +129,10 @@ const AuthorsPage = () => {
     formik.resetForm();
   }
 
-  const deleteAuthor = async () => {
-    try {
-      setBtnLoader(true);
-      await destroyAuthor(selectedAuthor?.id);
-      toast({ title: 'Author has been successfully deleted.' });
-      setSelectedAuthor({});
-      setDeleteAuthorOpen(false);
-      await fetchAuthors();
-    } catch (error) {
-      toast({ variant: 'destructive', title: error.message });
-    } finally {
-      setBtnLoader(false);
-    }
+  const handleEditAuthorDialogClose = () => {
+    setEditAuthorOpen(false);
+    setSelectedAuthor({});
+    formik.resetForm();
   }
 
   if (loader) {
@@ -118,7 +148,7 @@ const AuthorsPage = () => {
       <div className='px-6 py-4 bg-white flex justify-between items-center border-b shadow-sm'>
         <h2 className='text-xl font-bold tracking-tight'>Authors</h2>
 
-        <Button size='sm' onClick={() => setNewAuthorOpen(true)}>
+        <Button onClick={() => setNewAuthorOpen(true)}>
           <PlusIcon className='mr-1' /> Add new
         </Button>
       </div>
@@ -149,7 +179,7 @@ const AuthorsPage = () => {
                     <TableCell>{author.active ? <CheckCircledIcon className='text-green-800' /> : <CrossCircledIcon className='text-red-800' />}</TableCell>
                     <TableCell>{dayjs(author.created_at).fromNow()}</TableCell>
                     <TableCell>
-                      <Button size="smallIcon" className="mr-3">
+                      <Button size="smallIcon" className="mr-3" onClick={() => handleEditBtnClick(author)}>
                         <Pencil2Icon className="h-4 w-4" />
                       </Button>
                       <Button variant="destructive" size="smallIcon" onClick={() => handleDeleteBtnClick(author)}>
@@ -173,12 +203,19 @@ const AuthorsPage = () => {
         btnLoader={btnLoader}
       />
 
+      <EditAuthor
+        formik={formik}
+        editAuthorOpen={editAuthorOpen}
+        handleEditAuthorDialogClose={handleEditAuthorDialogClose}
+        btnLoader={btnLoader}
+      />
+
       <DeleteAuthor
         selectedAuthor={selectedAuthor}
         deleteAuthorOpen={deleteAuthorOpen}
         setDeleteAuthorOpen={setDeleteAuthorOpen}
         btnLoader={btnLoader}
-        deleteAuthor={deleteAuthor}
+        handleAuthorDelete={handleAuthorDelete}
       />
     </div>
   )

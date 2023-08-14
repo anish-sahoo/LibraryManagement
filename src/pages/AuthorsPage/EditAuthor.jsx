@@ -11,17 +11,17 @@ import {
   DialogTitle,
 } from "components/ui/dialog"
 
-const NewAuthor = ({
+const EditAuthor = ({
   formik,
-  newAuthorOpen,
-  handleNewAuthorDialogClose,
+  editAuthorOpen,
+  handleEditAuthorDialogClose,
   btnLoader,
 }) => {
   return (
-    <Dialog open={newAuthorOpen} onOpenChange={() => handleNewAuthorDialogClose()}>
+    <Dialog open={editAuthorOpen} onOpenChange={() => handleEditAuthorDialogClose()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='font-bold'>New Author</DialogTitle>
+          <DialogTitle className='font-bold'>Edit Author</DialogTitle>
         </DialogHeader>
 
         <div className='flex space-y-4 flex-col w-full'>
@@ -73,4 +73,4 @@ const NewAuthor = ({
   )
 }
 
-export default NewAuthor;
+export default EditAuthor;

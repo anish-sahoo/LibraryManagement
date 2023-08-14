@@ -16,7 +16,7 @@ const DeleteAuthor = ({
   deleteAuthorOpen,
   setDeleteAuthorOpen,
   btnLoader,
-  deleteAuthor,
+  handleAuthorDelete,
 }) => {
   return (
     <AlertDialog open={deleteAuthorOpen} onOpenChange={() => setDeleteAuthorOpen(false)}>
@@ -29,7 +29,7 @@ const DeleteAuthor = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>No, cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={btnLoader} onClick={() => deleteAuthor()}>
+          <AlertDialogAction disabled={btnLoader} onClick={() => handleAuthorDelete()}>
             {btnLoader && <ReloadIcon className='mr-2 h-3 w-3 animate-spin' />}
             Yes, continue
           </AlertDialogAction>
