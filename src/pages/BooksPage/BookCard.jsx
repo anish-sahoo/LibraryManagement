@@ -4,9 +4,9 @@ import { Badge } from "components/ui/badge"
 
 const BookCard = ({ book }) => {
   return (
-    <Card className='w-full p-4 rounded-md'>
+    <Card className='w-full p-4 rounded-sm'>
       <div className='flex'>
-        <div className='w-36 h-52 rounded-md shrink-0'>
+        <div className='w-36 h-52 rounded-sm shrink-0'>
           <img src={book.thumbnailUrl} alt={book.name} className='object-contain h-full w-full'></img>
         </div>
         <div className='ml-4 w-full'>
