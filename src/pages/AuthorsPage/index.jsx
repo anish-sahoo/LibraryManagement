@@ -4,7 +4,13 @@ import * as dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import Loader from  'components/Loader';
 import { Button } from 'components/ui/button';
-import { PlusIcon, CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
+import {
+  PlusIcon,
+  CheckCircledIcon,
+  CrossCircledIcon,
+  TrashIcon,
+  Pencil2Icon,
+} from '@radix-ui/react-icons';
 import {
   Table,
   TableBody,
@@ -14,8 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from 'components/ui/table';
-import { getAuthors, createAuthor } from 'apis/authors';
+import { getAuthors, createAuthor, destroyAuthor } from 'apis/authors';
 import NewAuthor from './NewAuthor';
+import DeleteAuthor from './DeleteAuthor';
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { Label } from '@radix-ui/react-label';
 import EmptyBox from 'components/EmptyBox';
@@ -29,6 +36,8 @@ const AuthorsPage = () => {
   const [authors, setAuthors] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [newAuthorOpen, setNewAuthorOpen] = useState(false);
+  const [deleteAuthorOpen, setDeleteAuthorOpen] = useState(false);
+  const [selectedAuthor, setSelectedAuthor] = useState({});
   const [btnLoader, setBtnLoader] = useState(false);
 
   const formik = useFormik({
@@ -50,10 +59,7 @@ const AuthorsPage = () => {
       setAuthors(response.data);
       setTotalRecords(response.data.length);
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: error.data.message,
-      });
+      toast({ variant: 'destructive', title: error.message });
     } finally {
       setLoader(false);
     }
@@ -65,12 +71,35 @@ const AuthorsPage = () => {
       await createAuthor(formik.values);
       toast({ title: 'Author has been successfully created.' });
       await fetchAuthors();
+      formik.resetForm();
       setNewAuthorOpen(false);
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: error.data.message,
-      });
+      toast({ variant: 'destructive', title: error.message });
+    } finally {
+      setBtnLoader(false);
+    }
+  }
+
+  const handleDeleteBtnClick = (data) => {
+    setSelectedAuthor(data);
+    setDeleteAuthorOpen(true);
+  }
+
+  const handleNewAuthorDialogClose = () => {
+    setNewAuthorOpen(false);
+    formik.resetForm();
+  }
+
+  const deleteAuthor = async () => {
+    try {
+      setBtnLoader(true);
+      await destroyAuthor(selectedAuthor?.id);
+      toast({ title: 'Author has been successfully deleted.' });
+      setSelectedAuthor({});
+      setDeleteAuthorOpen(false);
+      await fetchAuthors();
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
     } finally {
       setBtnLoader(false);
     }
@@ -117,9 +146,16 @@ const AuthorsPage = () => {
                   <TableRow key={author.id}>
                     <TableCell>{author.id}</TableCell>
                     <TableCell>{author.name}</TableCell>
-                    <TableCell>{author.active ? <CheckCircledIcon /> : <CrossCircledIcon />}</TableCell>
+                    <TableCell>{author.active ? <CheckCircledIcon className='text-green-800' /> : <CrossCircledIcon className='text-red-800' />}</TableCell>
                     <TableCell>{dayjs(author.created_at).fromNow()}</TableCell>
-                    <TableCell>Edit | Delete</TableCell>
+                    <TableCell>
+                      <Button size="smallIcon" className="mr-3">
+                        <Pencil2Icon className="h-4 w-4" />
+                      </Button>
+                      <Button variant="destructive" size="smallIcon" onClick={() => handleDeleteBtnClick(author)}>
+                        <TrashIcon className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 )
               })}
@@ -133,8 +169,16 @@ const AuthorsPage = () => {
       <NewAuthor
         formik={formik}
         newAuthorOpen={newAuthorOpen}
-        setNewAuthorOpen={setNewAuthorOpen}
+        handleNewAuthorDialogClose={handleNewAuthorDialogClose}
         btnLoader={btnLoader}
+      />
+
+      <DeleteAuthor
+        selectedAuthor={selectedAuthor}
+        deleteAuthorOpen={deleteAuthorOpen}
+        setDeleteAuthorOpen={setDeleteAuthorOpen}
+        btnLoader={btnLoader}
+        deleteAuthor={deleteAuthor}
       />
     </div>
   )

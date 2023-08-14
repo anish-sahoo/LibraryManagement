@@ -16,11 +16,11 @@ import {
 const NewAuthor = ({
   formik,
   newAuthorOpen,
-  setNewAuthorOpen,
+  handleNewAuthorDialogClose,
   btnLoader,
 }) => {
   return (
-    <Dialog open={newAuthorOpen} onOpenChange={() => setNewAuthorOpen(false)}>
+    <Dialog open={newAuthorOpen} onOpenChange={() => handleNewAuthorDialogClose()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className='font-bold'>New Author</DialogTitle>
