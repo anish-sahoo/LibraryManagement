@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useToast } from 'components/ui/use-toast';
-import { sleep } from 'lib/utils';
 import Loader from  'components/Loader';
 import { Button } from 'components/ui/button'
 import { PlusIcon } from '@radix-ui/react-icons'
@@ -37,7 +36,7 @@ const BooksPage = () => {
       const response = await getBooks();
       console.log(response.data);
       setBooks(response.data);
-      setTotalRecords(response.data.length);
+      setTotalRecords(response.data.length); 
     } catch (error) {
       toast({ variant: 'destructive', title: error.message });
     } finally {
@@ -46,7 +45,6 @@ const BooksPage = () => {
   }
 
   const handleBookCreate = async () => {
-
   }
 
   if (loader) {
@@ -85,7 +83,7 @@ const BooksPage = () => {
 
           <ScrollArea className='px-4' style={{ height: "calc(100vh - 170px)" }}>
             <div className="grid grid-cols-2 gap-4">
-              {books.map(book => <BookCard book={book} key={book.id} />)}
+              {books.map(book => <BookCard book={book} key={book.id}/>)}
             </div>
           </ScrollArea>
         </div>
