@@ -45,6 +45,7 @@ const BooksPage = () => {
   }
 
   const handleBookCreate = async () => {
+    console.log(formik.values);
   }
 
   if (loader) {
