@@ -10,6 +10,7 @@ import { Input } from 'components/ui/input'
 import BookCard from "./BookCard";
 import NewBook from "./NewBook";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
+import { getBooks } from 'apis/books';
 
 const BooksPage = () => {
   const { toast } = useToast();
@@ -28,26 +29,17 @@ const BooksPage = () => {
   });
 
   useEffect(() => {
-    fetchBooksList();
+    handleFetchBooks();
   }, []);
 
-  const fetchBooksList = async () => {
+  const handleFetchBooks = async () => {
     try {
-      await sleep(2000);
-
-      fetch('./database/books.json')
-        .then(response => response.json())
-        .then(data => {
-          setBooks(data);
-          setTotalRecords(data.length);
-        })
-        .catch(error => console.log(error));
-    } catch (e) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong!",
-        description: "Please try again after some time.",
-      });
+      const response = await getBooks();
+      console.log(response.data);
+      setBooks(response.data);
+      setTotalRecords(response.data.length);
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
     } finally {
       setLoader(false);
     }

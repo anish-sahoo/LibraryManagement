@@ -7,12 +7,12 @@ const BookCard = ({ book }) => {
     <Card className='w-full p-4 rounded-sm'>
       <div className='flex'>
         <div className='w-36 h-52 rounded-sm shrink-0'>
-          <img src={book.thumbnailUrl} alt={book.name} className='object-contain h-full w-full'></img>
+          <img src={book.image_url} alt={book.name} className='object-contain h-full w-full'></img>
         </div>
         <div className='ml-4 w-full'>
           <div className='flex justify-between items-start'>
             <h1 className='text-xl font-bold line-clamp-1'>{book.name}</h1>
-            <Badge className={`shrink-0 ml-2 ${book.availableCopies <= 1 ? "bg-destructive" : ""}`}>{book.availableCopies} Available</Badge>
+            <Badge className={`shrink-0 ml-2 ${book.available_copies <= 1 ? "bg-destructive" : ""}`}>{book.available_copies} Available</Badge>
           </div>
 
           <p className='mb-4'>By <span className='italic text-blue-600 font-semibold'>{book.author}</span></p>
