@@ -9,7 +9,7 @@ import { Input } from 'components/ui/input'
 import BookCard from "./BookCard";
 import NewBook from "./NewBook";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
-import { getBooks } from 'apis/books';
+import { createBook, getBooks } from 'apis/books';
 
 const BooksPage = () => {
   const { toast } = useToast();
@@ -46,6 +46,22 @@ const BooksPage = () => {
 
   const handleBookCreate = async () => {
     console.log(formik.values);
+    try {
+      await createBook({
+        name: formik.values.name,
+        author_id: formik.values.authorId,
+        description: formik.values.description,
+        available_copies: formik.values.availableCopies,
+        image_url: formik.values.imageUrl
+      });
+      toast({ title: 'Book has been successfully created.' });
+      await handleFetchBooks();
+      setNewBookOpen(false);
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
+    } finally {
+      formik.resetForm();
+    }
   }
 
   if (loader) {
