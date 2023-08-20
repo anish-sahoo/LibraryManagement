@@ -38,7 +38,8 @@ const BooksPage = () => {
       setBooks(response.data);
       setTotalRecords(response.data.length); 
     } catch (error) {
-      toast({ variant: 'destructive', title: error.message });
+      console.log(error);
+      toast({ variant: 'destructive', title: error.response.message });
     } finally {
       setLoader(false);
     }

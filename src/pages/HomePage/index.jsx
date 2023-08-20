@@ -12,8 +12,9 @@ const HomePage = () => {
   return (
     <div>
       <h1 className='text-3xl font-bold'>
-        This is home page..!!
+        Welcome to the Library Management Application!
       </h1>
+      <p>Click login to continue!</p>
       <Button onClick={goToLogin}>Login</Button>
     </div>
   )
