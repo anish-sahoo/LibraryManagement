@@ -10,6 +10,7 @@ import BookCard from "./BookCard";
 import NewBook from "./NewBook";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { createBook, getBooks } from 'apis/books';
+import { getAuthor } from 'apis/authors';
 
 const BooksPage = () => {
   const { toast } = useToast();

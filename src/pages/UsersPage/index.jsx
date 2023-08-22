@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "components/ui/table";
-
+import { getUsers } from 'apis/users';
 
 const UsersPage = () => {
   const { toast } = useToast();
@@ -26,23 +26,14 @@ const UsersPage = () => {
 
   const fetchUsers = async () => {
     try {
-      await sleep(2000);
-
-      fetch('./database/users.json')
-        .then(response => {
-          return response.json();
-        }).then(data => {
-          setUsers(data);
-          setTotalRecords(data.length);
-        }).catch((e) => {
-          console.log(e.message);
-        });
-    } catch (e) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong!",
-        description: "Please try again after some time.",
-      });
+      await sleep(1000);
+      const response = await getUsers();
+      console.log(response.data);
+      setUsers(response.data);
+      setTotalRecords(response.data.length); 
+    } catch (error) {
+      console.log(error);
+      toast({ variant: 'destructive', title: error.response.message });
     } finally {
       setLoader(false);
     }
@@ -73,12 +64,10 @@ const UsersPage = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>First Name</TableHead>
-              <TableHead>Last Name</TableHead>
+              <TableHead>Id</TableHead>
+              <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>Books Due</TableHead>
               <TableHead>User Type</TableHead>
-              <TableHead>Books Issued</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -86,12 +75,10 @@ const UsersPage = () => {
             {users.map(user => {
               return (
                 <TableRow key={user.id}>
-                  <TableCell>{user.firstName}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.id}</TableCell>
+                  <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>0</TableCell>
-                  <TableCell>Student</TableCell>
-                  <TableCell>0</TableCell>
+                  <TableCell>{user.user_type}</TableCell>
                 </TableRow>
               )
             })}
