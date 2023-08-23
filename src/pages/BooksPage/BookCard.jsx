@@ -11,7 +11,7 @@ const BookCard = ({ book }) => {
         </div>
         <div className='ml-4 w-full'>
           <div className='flex justify-between items-start'>
-            <h1 className='text-xl font-bold line-clamp-1'>{book.name}</h1>
+            <h1 className='text-xl font-bold line-clamp-1' title={book.name}>{book.name}</h1>
             <Badge className={`shrink-0 ml-2 ${book.available_copies <= 1 ? "bg-destructive" : ""}`}>{book.available_copies} Available</Badge>
           </div>
 
