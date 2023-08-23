@@ -10,7 +10,6 @@ import BookCard from "./BookCard";
 import NewBook from "./NewBook";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { createBook, getBooks } from 'apis/books';
-import { getAuthor } from 'apis/authors';
 
 const BooksPage = () => {
   const { toast } = useToast();
@@ -18,6 +17,8 @@ const BooksPage = () => {
   const [loader, setLoader] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
   const [newBookOpen, setNewBookOpen] = useState(false);
+  const [displayBooks, setDisplayBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -32,11 +33,21 @@ const BooksPage = () => {
     handleFetchBooks();
   }, []);
 
+  useEffect(() => {
+    const arr = books.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setDisplayBooks(arr);
+  }, [searchTerm])
+
+  useEffect(() => {
+    console.log('display books',displayBooks);
+  }, [displayBooks])
+
   const handleFetchBooks = async () => {
     try {
       const response = await getBooks();
-      console.log(response.data);
+      // console.log(response.data);
       setBooks(response.data);
+      setDisplayBooks(books);
       setTotalRecords(response.data.length); 
     } catch (error) {
       console.log(error);
@@ -74,6 +85,10 @@ const BooksPage = () => {
     );
   }
 
+  const searchHandler = (e) => {
+    setSearchTerm(e.target.value.trim());
+  }
+
   return (
     <div>
       <div className="px-6 py-4 bg-white flex justify-between items-center border-b">
@@ -97,12 +112,13 @@ const BooksPage = () => {
             <Input
               placeholder="Search here..."
               className='w-full p-4'
+              onChange={searchHandler}
             />
           </div>
 
           <ScrollArea className='px-4' style={{ height: "calc(100vh - 170px)" }}>
             <div className="grid grid-cols-2 gap-4">
-              {books.map(book => <BookCard book={book} key={book.id}/>)}
+              {displayBooks.map(book => <BookCard book={book} key={book.id}/>)}
             </div>
           </ScrollArea>
         </div>
