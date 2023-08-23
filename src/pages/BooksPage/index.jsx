@@ -33,12 +33,14 @@ const BooksPage = () => {
     handleFetchBooks();
   }, []);
 
-  // useEffect(() => {
-  //   const arr = books.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  //   console.log('arr',arr);
-  //   setDisplayBooks(arr);
-  //   console.log('display books',displayBooks);
-  // }, [searchTerm])
+  useEffect(() => {
+    const arr = books.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setDisplayBooks(arr);
+  }, [searchTerm])
+
+  useEffect(() => {
+    console.log('display books',displayBooks);
+  }, [displayBooks])
 
   const handleFetchBooks = async () => {
     try {
@@ -84,8 +86,7 @@ const BooksPage = () => {
   }
 
   const searchHandler = (e) => {
-    console.log('e.target.value',e.target.value);
-    //setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value.trim());
   }
 
   return (
@@ -117,7 +118,7 @@ const BooksPage = () => {
 
           <ScrollArea className='px-4' style={{ height: "calc(100vh - 170px)" }}>
             <div className="grid grid-cols-2 gap-4">
-              {books.map(book => <BookCard book={book} key={book.id}/>)}
+              {displayBooks.map(book => <BookCard book={book} key={book.id}/>)}
             </div>
           </ScrollArea>
         </div>
