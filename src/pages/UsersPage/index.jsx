@@ -14,26 +14,39 @@ import {
 } from "components/ui/table";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { getUsers } from 'apis/users';
-import { NewUser } from './NewUser';
+import { useFormik } from 'formik';
+import NewUser from './NewUser';
 
 const UsersPage = () => {
   const { toast } = useToast();
   const [loader, setLoader] = useState(true);
   const [users, setUsers] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [newUserOpen, setNewUserOpen] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: INITIAL_VALUE,
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: () => {
-      console.log('submit clicked');
+      handleUserCreate();
     },
   });
 
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const handleUserCreate = async () => {
+    console.log(formik.values);
+    try {
+      setNewUserOpen(false);
+    } catch (error) {
+      toast({ variant: 'destructive', title: error.message });
+    } finally {
+      formik.resetForm();
+    }
+  }
 
   const fetchUsers = async () => {
     try {
@@ -66,7 +79,7 @@ const UsersPage = () => {
           <p className="text-muted-foreground">Total records: {totalRecords}</p>
         </div>
 
-        <Button>
+        <Button onClick={() => setNewUserOpen(true)}>
           <PlusIcon className='mr-2' /> Add new
         </Button>
       </div>
@@ -96,9 +109,12 @@ const UsersPage = () => {
           </TableBody>
         </Table>
       </div>
-      <NewUser>
 
-      </NewUser>
+      <NewUser
+        formik={formik}
+        newUserOpen={newUserOpen}
+        setNewUserOpen={setNewUserOpen}
+      />
     </div>
   )
 }

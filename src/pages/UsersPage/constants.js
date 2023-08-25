@@ -27,5 +27,6 @@ export const VALIDATION_SCHEMA = Yup.object({
 export const INITIAL_VALUE = {
   name: '',
   email: '',
-  password: ''
+  password: '',
+  select: ''
 };

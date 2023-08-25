@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "components/ui/dialog"
-
 import {
     Select,
     SelectContent,
@@ -74,9 +73,8 @@ const NewUser = ({
             />
           </div>
           
-          <div>
-            <Select
-              value={formik.values.select}>
+          {/* <div>
+            <Select>
               <SelectTrigger>
                 <SelectValue placeholder="User Type" />
               </SelectTrigger>
@@ -85,13 +83,12 @@ const NewUser = ({
                 <SelectItem value="VISITOR">Visitor</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
 
         </div>
 
         <DialogFooter>
-          <Button
-            onClick={formik.handleSubmit}
+          <Button onClick={formik.handleSubmit}
             type='submit'
           >
             Add User
@@ -104,4 +101,4 @@ const NewUser = ({
   )
 }
 
-export default NewBook;
+export default NewUser;
