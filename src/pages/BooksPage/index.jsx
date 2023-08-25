@@ -34,7 +34,10 @@ const BooksPage = () => {
   }, []);
 
   useEffect(() => {
-    const arr = books.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const arr = books.filter(b => (
+      b.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.author.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ));
     setDisplayBooks(arr);
   }, [searchTerm])
 
@@ -45,9 +48,9 @@ const BooksPage = () => {
   const handleFetchBooks = async () => {
     try {
       const response = await getBooks();
-      // console.log(response.data);
+      console.log(response.data);
       setBooks(response.data);
-      setDisplayBooks(books);
+      setDisplayBooks(response.data);
       setTotalRecords(response.data.length); 
     } catch (error) {
       console.log(error);

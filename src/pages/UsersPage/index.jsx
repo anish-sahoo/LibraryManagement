@@ -12,13 +12,24 @@ import {
   TableHeader,
   TableRow,
 } from "components/ui/table";
+import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { getUsers } from 'apis/users';
+import { NewUser } from './NewUser';
 
 const UsersPage = () => {
   const { toast } = useToast();
   const [loader, setLoader] = useState(true);
   const [users, setUsers] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: INITIAL_VALUE,
+    validationSchema: VALIDATION_SCHEMA,
+    onSubmit: () => {
+      console.log('submit clicked');
+    },
+  });
 
   useEffect(() => {
     fetchUsers();
@@ -85,6 +96,9 @@ const UsersPage = () => {
           </TableBody>
         </Table>
       </div>
+      <NewUser>
+
+      </NewUser>
     </div>
   )
 }
