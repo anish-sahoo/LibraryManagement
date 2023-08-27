@@ -73,7 +73,10 @@ const NewUser = ({
             />
           </div>
 
-          <Select onValueChange={(value) => formik.setFieldValue('select', value)}>
+          <Select 
+            onValueChange={(value) => formik.setFieldValue('select', value)}
+            required={true}
+          >
               <SelectTrigger>
                 <SelectValue 
                   placeholder="User Type"
