@@ -72,23 +72,23 @@ const NewUser = ({
               }
             />
           </div>
-          
-          {/* <div>
-            <Select>
+
+          <Select onValueChange={(value) => formik.setFieldValue('select', value)}>
               <SelectTrigger>
-                <SelectValue placeholder="User Type" />
+                <SelectValue 
+                  placeholder="User Type"
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ADMIN">Admin</SelectItem>
                 <SelectItem value="VISITOR">Visitor</SelectItem>
               </SelectContent>
             </Select>
-          </div> */}
-
         </div>
 
         <DialogFooter>
-          <Button onClick={formik.handleSubmit}
+          <Button onClick={
+            formik.handleSubmit}
             type='submit'
           >
             Add User
@@ -102,3 +102,15 @@ const NewUser = ({
 }
 
 export default NewUser;
+
+/* <div>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="User Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ADMIN">Admin</SelectItem>
+                <SelectItem value="VISITOR">Visitor</SelectItem>
+              </SelectContent>
+            </Select>
+          </div> */

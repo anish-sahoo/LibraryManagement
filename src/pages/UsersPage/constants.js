@@ -16,11 +16,12 @@ export const VALIDATION_SCHEMA = Yup.object({
     .nullable(),
 
   password: Yup.string()
-    .required('Description can\'t be blank.')
+    .required('Password can\'t be blank.')
     .nullable(),
 
   select: Yup.string()
     .required('You must select user type!')
+    .min(2, 'You must select user type!')
     .nullable()
 });
 

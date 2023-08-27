@@ -37,7 +37,7 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
-  const handleUserCreate = async () => {
+  const handleUserCreate = () => {
     console.log(formik.values);
     try {
       setNewUserOpen(false);
