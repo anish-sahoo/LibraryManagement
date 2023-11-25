@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "components/ui/table";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
-import { getUsers } from 'apis/users';
+import { createUser, getUsers } from 'apis/users';
 import { useFormik } from 'formik';
 import NewUser from './NewUser';
 
@@ -40,6 +40,12 @@ const UsersPage = () => {
   const handleUserCreate = () => {
     console.log(formik.values);
     try {
+      //make this async
+      // await createUser({
+      //   name: formik.values.name,
+      //   email: formik.values.email,
+      //   user_type: formik.values.user_type,
+      // });
       setNewUserOpen(false);
     } catch (error) {
       toast({ variant: 'destructive', title: error.message });
