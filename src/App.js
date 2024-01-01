@@ -61,8 +61,8 @@ export const router = createBrowserRouter(
         <Route path='/settings' element={<SettingsPage />} />
         <Route path='/students' element={<StudentsPage />} />
         <Route path='/authors' element={<AuthorsPage />} />
-        <Route path='/reports' element={<ReportsPage />} />
-        <Route path='/users' element={<UsersPage />} />
+        {/* <Route path='/reports' element={<ReportsPage />} /> */}
+        {/* <Route path='/users' element={<UsersPage />} /> */}
       </Route>
     </Route>
   )

@@ -10,6 +10,7 @@ import BookCard from "./BookCard";
 import NewBook from "./NewBook";
 import { VALIDATION_SCHEMA, INITIAL_VALUE } from './constants';
 import { createBook, getBooks } from 'apis/books';
+import { Separator } from 'components/ui/separator';
 
 const BooksPage = () => {
   const { toast } = useToast();
@@ -106,9 +107,26 @@ const BooksPage = () => {
       </div>
 
       <div className="flex">
-        <ScrollArea className="w-[250px] shadow-sm bg-white border-r p-4 shrink-0" >
-          <h3 className='font-semibold text-xl'>Filters</h3>
-        </ScrollArea>
+        <div className="w-[250px] shadow-sm bg-white border-r p-4 shrink-0" >
+          <div className='flex flex-row items-center align-middle'>
+            <h3 className='font-semibold text-xl'>Filters</h3>
+            <Button className='w-full ml-2 mr-1 text-xs h-min'>Apply</Button>
+            <Button className='w-full ml-1 mr-2 text-xs h-min'>Reset</Button>
+          </div>
+          <Separator className='my-2'/>
+          <ScrollArea className='mt-4' style={{ height: "calc(100vh - 170px)" }}>
+            <div className='flex flex-col'>
+              <div className='flex flex-row items-center'>
+                <input type='checkbox' className='mr-2' />
+                <span className='text-sm'>Available</span>
+              </div>
+              <div className='flex flex-row items-center'>
+                <input type='checkbox' className='mr-2' />
+                <span className='text-sm'>Unavailable</span>
+              </div>
+            </div>
+          </ScrollArea>
+        </div>
 
         <div className="w-full py-4">
           <div className='mb-4 px-4'>

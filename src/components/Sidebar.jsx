@@ -39,16 +39,16 @@ const Sidebar = () => {
       logo: <Group />,
       path: '/authors',
     },
-    {
-      title: 'Reports',
-      logo: <Report />,
-      path: '/reports',
-    },
-    {
-      title: 'Users',
-      logo: <UserCircle />,
-      path: '/users',
-    },
+    // {
+    //   title: 'Reports',
+    //   logo: <Report />,
+    //   path: '/reports',
+    // },
+    // {
+    //   title: 'Users',
+    //   logo: <UserCircle />,
+    //   path: '/users',
+    // },
     {
       title: 'Settings',
       logo: <Settings />,
